@@ -3,7 +3,6 @@ const path = require("path");
 
 const contactsPath = path.join(__dirname, "db", "contacts.json");
 
-
 /** Get all contacts from contacts.json (array) */
 const listContacts = async () => {
   const data = await fs.readFile(contactsPath);
@@ -12,17 +11,19 @@ const listContacts = async () => {
 
 /** Get one contact by id */
 const getContactById = async (contactId) => {
-  // ...твой код. Возвращает объект контакта с таким id. Возвращает null, если объект с таким id не найден.
+  const contacts = await listContacts();
+  const foundСontact = contacts.find((contact) => contact.id === contactId);
+  return foundСontact || null;
 };
 
 /** Remove one contact by id */
 const removeContact = async (contactId) => {
-  // ...твой код. Возвращает объект удаленного контакта. Возвращает null, если объект с таким id не найден.
+  const data = await fs.readFile(contactsPath);
 };
 
 /** Add a new contact into contacts.json */
 const addContact = async (name, email, phone) => {
-  // ...твой код. Возвращает объект добавленного контакта.
+  const data = await fs.readFile(contactsPath);
 };
 
 module.exports = {
