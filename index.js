@@ -1,30 +1,39 @@
 const contacts = require("./contacts");
 
-const getContactList = async () => {
-const getAllContacts = await contacts.listContacts();
-return console.log(getAllContacts);
-}
+const { program } = require("commander");
 
-// getContactList();
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
 
-// const getContact = async (id) => {
-//   const foundContact = await contacts.getContactById(id);
-//   return console.log(foundContact);
-// };
+program.parse();
 
-// getContact("AeHIrLTr6JkxGE6SN-0Rw");
+const params = program.opts();
 
+const invokeAction = async ({ action, id, name, email, phone }) => {
+  switch (action) {
+    case "list":
+      const getAllContacts = await contacts.listContacts();
+      return console.table(getAllContacts);
 
-// const removeContactById = async (id) => {
-//   const removedContact = await contacts.removeContact(id);
-//   return console.log(removedContact);
-// };
+    case "get":
+      const foundContact = await contacts.getContactById(id);
+      return console.log(foundContact);
 
-// removeContactById("j__Wzuze1dLVBODXEoR4K");
+    case "add":
+      const newContact = await contacts.addContact(name, email, phone);
+      return console.log(newContact);
 
-const addContact = async (...data) => {
-const newContacts = await contacts.addContact(...data);
-return console.log(getContactList());
+    case "remove":
+      const removedContact = await contacts.removeContact(id);
+      return console.log(removedContact);
+
+    default:
+      console.warn("\x1B[31m Unknown action type!");
+  }
 };
 
-addContact("Mango", "mamama@mail.com", "722-22-880");
+invokeAction(params);
