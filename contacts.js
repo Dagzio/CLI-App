@@ -12,7 +12,7 @@ const listContacts = async () => {
   return JSON.parse(data);
 };
 
-/** Get one contact by id.
+/** Get contact by id.
  * @returns found contact.
  */
 const getContactById = async (contactId) => {
@@ -37,8 +37,8 @@ const addContact = async (name, email, phone) => {
   return newContact;
 };
 
-/** Remove one contact by id.
- * @returns removed contacts.
+/** Remove contact by id.
+ * @returns removed contact.
  */
 const removeContact = async (contactId) => {
   const contacts = await listContacts();
